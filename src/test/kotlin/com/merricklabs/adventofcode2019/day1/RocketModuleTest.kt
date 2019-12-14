@@ -2,6 +2,7 @@ package com.merricklabs.adventofcode2019.day1
 
 import io.kotlintest.shouldBe
 import org.testng.annotations.Test
+import java.io.File
 
 object RocketModuleTest {
 
@@ -27,5 +28,16 @@ object RocketModuleTest {
     fun `Test from example of mass 100756`(){
         val expectedResult = 33583
         RocketModule(100756).getFuel() shouldBe expectedResult
+    }
+
+    @Test
+    fun `Get sum of input`(){
+        val result = this::class.java.getResourceAsStream("input.txt")
+                .bufferedReader()
+                .readLines()
+                .asSequence()
+                .map { RocketModule(it.toInt()).getFuel() }
+                .sum()
+        result shouldBe 3464735
     }
 }
