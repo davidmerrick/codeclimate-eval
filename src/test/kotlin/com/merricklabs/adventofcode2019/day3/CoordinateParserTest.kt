@@ -60,6 +60,14 @@ object CoordinateParserTest {
     }
 
     @Test
+    fun `Test distanceTo`(){
+        // Todo: Confirm this function is okay
+
+        val lineA = Line("R8,U5,L5,D3")
+        lineA.distanceTo(Pair(4,0)) shouldBe 3
+    }
+
+    @Test
     fun `Challenge 2 input`() {
         val input = this::class.java.getResourceAsStream("input.txt")
                 .bufferedReader()
@@ -74,7 +82,7 @@ object CoordinateParserTest {
                 .map { lineA.distanceTo(it) + lineB.distanceTo(it) }
                 .min()!!
 
-        shortest shouldBe 151563
+        shortest shouldBe 151561
     }
 
 

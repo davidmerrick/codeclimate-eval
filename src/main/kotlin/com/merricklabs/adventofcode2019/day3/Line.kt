@@ -27,9 +27,9 @@ class Line(val input: String) {
             // Todo: Decreasing range isn't generating. Need to use "downTo"
             val didChangeX = prevX != x
             newPairs = if (didChangeX) {
-                Companion.getIntsBetween(prevX, x).map { Pair(it, y) }.toList()
+                getIntsBetween(prevX, x).map { Pair(it, y) }.toList()
             } else {
-                Companion.getIntsBetween(prevY, y).map { Pair(x, it) }.toList()
+                getIntsBetween(prevY, y).map { Pair(x, it) }.toList()
             }
 
             pointList.addAll(newPairs)
@@ -38,7 +38,7 @@ class Line(val input: String) {
         return pointList
     }
 
-    fun distanceTo(coord: Pair<Int, Int>) = pointList.indexOf(coord) + 1
+    fun distanceTo(coord: Pair<Int, Int>) = pointList.indexOf(coord) - 1
 
     companion object {
         private fun getIntsBetween(start: Int, end: Int): List<Int> {
