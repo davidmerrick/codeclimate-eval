@@ -2,10 +2,11 @@ package com.merricklabs.adventofcode2019.day3
 
 class Line(val input: String) {
 
-    val pointSet by lazy { computePointSet() }
+    val pointSet by lazy { pointList.toSet() }
+    val pointList by lazy { computePointList() }
 
-    private fun computePointSet(): Set<Pair<Int, Int>> {
-        val pointSet = mutableSetOf<Pair<Int, Int>>()
+    private fun computePointList(): List<Pair<Int, Int>> {
+        val pointList = mutableListOf<Pair<Int, Int>>()
 
         var x = 0
         var y = 0
@@ -21,27 +22,30 @@ class Line(val input: String) {
                 'D' -> y -= delta.substring(1).toInt()
             }
 
-            var newPairs = mutableListOf<Pair<Int, Int>>()
+            val newPairs: List<Pair<Int, Int>>
 
             // Todo: Decreasing range isn't generating. Need to use "downTo"
-            for (i in getRange(prevX, x)) {
-                for (j in getRange(prevY, y)) {
-                    newPairs.add(Pair(i, j))
-                }
+            val didChangeX = prevX != x
+            newPairs = if (didChangeX) {
+                Companion.getIntsBetween(prevX, x).map { Pair(it, y) }.toList()
+            } else {
+                Companion.getIntsBetween(prevY, y).map { Pair(x, it) }.toList()
             }
 
-            pointSet.addAll(newPairs)
+            pointList.addAll(newPairs)
         }
 
-        pointSet.remove(Pair(0, 0))
-        return pointSet
+        return pointList
     }
 
-    private fun getRange(a: Int, b: Int): IntRange {
-        if (a < b) {
-            return a..b
+    fun distanceTo(coord: Pair<Int, Int>) = pointList.indexOf(coord) + 1
+
+    companion object {
+        private fun getIntsBetween(start: Int, end: Int): List<Int> {
+            if (start > end) {
+                return (start downTo end).toList()
+            }
+            return (start..end).toList()
         }
-        return b..a
     }
-
 }
