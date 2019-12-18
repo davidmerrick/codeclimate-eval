@@ -8,6 +8,9 @@ class Line(val input: String) {
     private fun computePointList(): List<Pair<Int, Int>> {
         val pointList = mutableListOf<Pair<Int, Int>>()
 
+        // Add in origin
+        pointList.add(Pair(0,0))
+
         var x = 0
         var y = 0
         for (delta in input.split(",")) {
@@ -22,23 +25,21 @@ class Line(val input: String) {
                 'D' -> y -= delta.substring(1).toInt()
             }
 
-            val newPairs: List<Pair<Int, Int>>
-
-            // Todo: Decreasing range isn't generating. Need to use "downTo"
             val didChangeX = prevX != x
-            newPairs = if (didChangeX) {
+            val newPairs = if (didChangeX) {
                 getIntsBetween(prevX, x).map { Pair(it, y) }.toList()
             } else {
                 getIntsBetween(prevY, y).map { Pair(x, it) }.toList()
             }
 
-            pointList.addAll(newPairs)
+            // Remove starting point, since it was contained in previous iteration
+            pointList.addAll(newPairs.subList(1, newPairs.size))
         }
 
         return pointList
     }
 
-    fun distanceTo(coord: Pair<Int, Int>) = pointList.indexOf(coord) - 1
+    fun distanceTo(coord: Pair<Int, Int>) = pointList.indexOf(coord)
 
     companion object {
         private fun getIntsBetween(start: Int, end: Int): List<Int> {
