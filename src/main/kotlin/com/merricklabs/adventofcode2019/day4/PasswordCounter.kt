@@ -6,11 +6,16 @@ data class PasswordCounter(val lowerBound: Int, val upperBound: Int) {
     // But I'm thinking a better approach would be to generate
     // a tree of valid values in a range, and count the nodes
 
-    fun count() = (lowerBound..upperBound).count { meetsCriteria(it) }
+    fun count() = (lowerBound..upperBound).count { meetsPart1Criteria(it) }
+    fun countPart2() = (lowerBound..upperBound).count { meetsPart2Criteria(it) }
 
     companion object {
-        fun meetsCriteria(value: Int): Boolean {
+        fun meetsPart1Criteria(value: Int): Boolean {
             return isIncreasing(value) && hasDouble(value)
+        }
+
+        fun meetsPart2Criteria(value: Int): Boolean {
+            return isIncreasing(value) && hasOnlyDouble(value)
         }
 
         fun isIncreasing(value: Int): Boolean {
@@ -37,6 +42,21 @@ data class PasswordCounter(val lowerBound: Int, val upperBound: Int) {
                 prev = current
             }
             return false
+        }
+
+        fun hasOnlyDouble(value: Int): Boolean {
+            val consecutives = mutableMapOf<Int, Int>()
+            val valList = value.split().toMutableList()
+            var prev = valList.removeAt(0)
+            for (i in 0 until valList.size) {
+                val current = valList.removeAt(0)
+                if (current == prev) {
+                    var count = consecutives[current] ?: 0
+                    consecutives[current] = ++count
+                }
+                prev = current
+            }
+            return consecutives.any { it.value == 1 }
         }
     }
 }
