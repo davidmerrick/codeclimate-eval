@@ -2,7 +2,7 @@ package com.merricklabs.adventofcode2019.day5
 
 import com.merricklabs.adventofcode2019.day5.OpCode.HALT
 
-class IntcodeExecutor(private val program: MutableList<Int>) {
+class IntcodeExecutor(val program: MutableList<Int>) {
 
     private var instructionPointer = 0
 
@@ -11,7 +11,11 @@ class IntcodeExecutor(private val program: MutableList<Int>) {
 
         while (instructionPointer < program.size) {
             val header = InstructionHeader(program[instructionPointer])
-            println(program.subList(instructionPointer, instructionPointer + header.numParams + 1))
+            val params = program.subList(instructionPointer + 1, instructionPointer + 1 + header.numParams)
+            val instruction = Instruction(header, params)
+
+            instruction.execute(program)
+
             if (header.opCode == HALT) {
                 return
             }

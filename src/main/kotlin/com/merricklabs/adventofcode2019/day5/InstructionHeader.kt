@@ -13,8 +13,8 @@ data class InstructionHeader(private val value: Int) {
 
     init {
         numParams = when (opCode) {
-            MULT, ADD -> 2
-            INPUT, OUTPUT -> 1
+            MULT, ADD -> 3
+            INPUT, OUTPUT -> 2
             HALT -> 0
         }
         paramModes = if (value > 100) {
@@ -23,6 +23,7 @@ data class InstructionHeader(private val value: Int) {
                     .filter { it != "" }
                     .map { it.toInt() }
                     .subList(0, 2)
+                    .reversed()
         } else {
             // Default to position mode
             listOf(0, 0)
