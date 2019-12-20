@@ -7,7 +7,8 @@ import com.merricklabs.adventofcode2019.day5.OpCode.OUTPUT
 
 data class Instruction(
         val header: InstructionHeader,
-        val params: List<Int>
+        val params: List<Int>,
+        val input: Int?
 ) {
     fun execute(program: MutableList<Int>) {
         when (header.opCode) {
@@ -25,13 +26,11 @@ data class Instruction(
     }
 
     private fun input(program: MutableList<Int>) {
-        val firstParam = getParam(0, program)
-        program[params[1]] = firstParam
+        program[params[0]] = input!!
     }
 
     private fun output(program: MutableList<Int>) {
-        val firstParam = getParam(0, program)
-        println(firstParam)
+        println(program[params[0]])
     }
 
     private fun add(program: MutableList<Int>) {

@@ -8,7 +8,7 @@ enum class OpCode(val value: Int) {
     HALT(99);
 
     companion object {
-        private val map = OpCode.values().associateBy(OpCode::value)
+        private val map = values().associateBy(OpCode::value)
         fun fromInt(type: Int) = map[type]
     }
 }
