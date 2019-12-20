@@ -19,7 +19,6 @@ class IntcodeExecutorTest {
         val executor = IntcodeExecutor(program, null)
         executor.execute()
         program[4] shouldBe 99
-        println(program)
     }
 
     @Test(description = "This should output whatever the input is")
@@ -39,6 +38,5 @@ class IntcodeExecutorTest {
                 .toMutableList()
         val executor = IntcodeExecutor(program, 1)
         executor.execute()
-        println(program)
     }
 }
