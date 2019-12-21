@@ -12,6 +12,11 @@ class IntcodeExecutor(val program: MutableList<Int>, val input: Int?) {
             val params = program.subList(instructionPointer + 1, instructionPointer + 1 + header.numParams)
             val instruction = Instruction(header, params, input)
 
+            // Todo: Could have execution result that
+            // executor could use to set the instruction pointer
+            // Result could be optional. Default behavior is to
+            // advance to header.numParams + 1
+
             instruction.execute(program)
 
             if (header.opCode == HALT) {
