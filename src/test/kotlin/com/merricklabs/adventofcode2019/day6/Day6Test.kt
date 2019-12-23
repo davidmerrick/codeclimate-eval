@@ -1,5 +1,6 @@
 package com.merricklabs.adventofcode2019.day6
 
+import com.merricklabs.adventofcode2019.day6.TreeDistanceTraverser.traverse
 import io.kotlintest.shouldBe
 import org.testng.annotations.Test
 
@@ -26,15 +27,11 @@ class Day6Test {
                 .toList()
 
         val root = buildOrbitTree(orbitList)
-        val orbitCount = TreeDistanceTraverser.traverse(root, 0)
+        val orbitCount = traverse(root, 0)
         orbitCount shouldBe 42
     }
 
 
-    // Todo: These orbits aren't all part of the same tree
-    // May need to create a map of all the root nodes
-    // Could do this by filtering the tree map and only returning the ones
-    // with a null parent.
     @Test
     fun `Test my input`() {
         val orbitList = this::class.java.getResourceAsStream("input.txt")
@@ -45,7 +42,7 @@ class Day6Test {
                 .toList()
 
         val root = buildOrbitTree(orbitList)
-        val orbitCount = TreeDistanceTraverser.traverse(root, 0)
+        val orbitCount = traverse(root, 0)
         println(orbitCount)
     }
 
@@ -65,7 +62,8 @@ class Day6Test {
             treeMap[orbit.second] = newChild
         }
 
-        return treeMap[orbitList[0].first]!!
+        // Return root node
+        return treeMap.values.first { it.parent == null }
     }
 
 }
