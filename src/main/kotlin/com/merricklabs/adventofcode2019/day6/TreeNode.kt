@@ -2,17 +2,16 @@ package com.merricklabs.adventofcode2019.day6
 
 data class TreeNode(
         val name: String,
-        val parent: TreeNode? = null
+        var parent: TreeNode? = null
 ) {
     private val _children: MutableList<TreeNode> = mutableListOf()
 
-    // Hide mutability
+    // Encapsulation
     val children: List<TreeNode>
         get() = _children.toList()
 
-    fun addChild(node: TreeNode): TreeNode {
-        val toAdd = node.copy(parent = this)
-        _children.add(toAdd)
-        return toAdd
+    fun addChild(node: TreeNode) {
+        node.parent = this
+        _children.add(node)
     }
 }

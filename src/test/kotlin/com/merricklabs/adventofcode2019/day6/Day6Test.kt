@@ -54,20 +54,24 @@ class Day6Test {
         val treeMap = mutableMapOf<String, TreeNode>()
 
         for (orbit in orbitList) {
-            val currentRoot: TreeNode = if (treeMap.containsKey(orbit.first)) {
-                treeMap[orbit.first]!!
-            } else {
-                val newNode = TreeNode(orbit.first)
-                treeMap[orbit.first] = newNode
-                newNode
-            }
-
-            val newChild = currentRoot.addChild(TreeNode(orbit.second))
-            treeMap[orbit.second] = newChild
+            val currentRoot = getOrCreateNode(orbit.first, treeMap)
+            val childNode = getOrCreateNode(orbit.second, treeMap)
+            currentRoot.addChild(childNode)
+            treeMap[orbit.second] = childNode
         }
 
-        // Return root node
-        return treeMap.values.first { it.parent == null }
+        return treeMap.toTree()
     }
 
+    private fun getOrCreateNode(value: String, treeMap: MutableMap<String, TreeNode>): TreeNode {
+        return if (treeMap.containsKey(value)) {
+            treeMap[value]!!
+        } else {
+            val newNode = TreeNode(value)
+            treeMap[value] = newNode
+            newNode
+        }
+    }
 }
+
+fun Map<String, TreeNode>.toTree() = this.values.first { it.parent == null }

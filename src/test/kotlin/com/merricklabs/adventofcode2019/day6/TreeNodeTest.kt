@@ -19,6 +19,17 @@ class TreeNodeTest {
     }
 
     @Test
+    fun `Adding children should set parent`() {
+        val root = TreeNode("COM", null)
+        val a = TreeNode("A")
+        val b = TreeNode("B")
+        root.addChild(a)
+        a.addChild(b)
+        a.parent shouldBe root
+        b.parent shouldBe a
+    }
+
+    @Test
     fun `Traverse total distance for single-level tree`() {
         val root = TreeNode("A", null)
         root.addChild(TreeNode("B", null))
@@ -36,7 +47,8 @@ class TreeNodeTest {
     @Test
     fun `Traverse distance for two-level tree`() {
         val root = TreeNode("A", null)
-        val b = root.addChild(TreeNode("B", null))
+        val b = TreeNode("B", null)
+        root.addChild(b)
         b.addChild(TreeNode("C", null))
 
         // Total count of orbits should be
