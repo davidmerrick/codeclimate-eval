@@ -46,6 +46,10 @@ class Day6Test {
         println(orbitCount)
     }
 
+    /**
+     * Need to build the tree from a map because the values can be
+     * out of order.
+     */
     private fun buildOrbitTree(orbitList: List<Pair<String, String>>): TreeNode {
         val treeMap = mutableMapOf<String, TreeNode>()
 
