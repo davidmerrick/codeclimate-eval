@@ -40,7 +40,7 @@ class TreeNodeTest {
         // c -> a
         // so 2
 
-        val count = TreeDistanceTraverser.traverse(root, 0)
+        val count = TreeTotalDistanceTraverser.traverse(root, 0)
         count shouldBe 2
     }
 
@@ -57,7 +57,18 @@ class TreeNodeTest {
         // c -> b
         // so 3
 
-        val count = TreeDistanceTraverser.traverse(root, 0)
+        val count = TreeTotalDistanceTraverser.traverse(root, 0)
         count shouldBe 3
+    }
+
+    @Test
+    fun `Traverse path to value`() {
+        val root = TreeNode("A", null)
+        val b = TreeNode("B", null)
+        root.addChild(b)
+        b.addChild(TreeNode("C", null))
+
+        val nodeSet = TreeTotalDistanceTraverser.shortestPathTo("C", root, setOf())
+        nodeSet.size shouldBe 3
     }
 }

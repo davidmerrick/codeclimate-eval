@@ -1,6 +1,7 @@
 package com.merricklabs.adventofcode2019.day6
 
-import com.merricklabs.adventofcode2019.day6.TreeDistanceTraverser.traverse
+import com.merricklabs.adventofcode2019.day6.TreeTotalDistanceTraverser.shortestPathTo
+import com.merricklabs.adventofcode2019.day6.TreeTotalDistanceTraverser.traverse
 import io.kotlintest.shouldBe
 import org.testng.annotations.Test
 
@@ -31,9 +32,8 @@ class Day6Test {
         orbitCount shouldBe 42
     }
 
-
     @Test
-    fun `Test my input`() {
+    fun `Test my input for part 1`() {
         val orbitList = this::class.java.getResourceAsStream("input.txt")
                 .bufferedReader()
                 .readLines()
@@ -44,6 +44,24 @@ class Day6Test {
         val root = buildOrbitTree(orbitList)
         val orbitCount = traverse(root, 0)
         println(orbitCount)
+    }
+
+    @Test
+    fun `Part 2, shortest path to Santa`() {
+        val orbitList = this::class.java.getResourceAsStream("input.txt")
+                .bufferedReader()
+                .readLines()
+                .map { it.split(")") }
+                .map { Pair(it[0], it[1]) }
+                .toList()
+
+        val root = buildOrbitTree(orbitList)
+
+        // Min distance will be set union - set intersection. Need nodes that are not common.
+        val setA = shortestPathTo("YOU", root, setOf())
+        val setB = shortestPathTo("SAN", root, setOf())
+        val nodesBetween = setA.union(setB).minus(setA.intersect(setB))
+        println(nodesBetween.size - 2) // Don't count me or Santa, count orbital transfers
     }
 
     /**
