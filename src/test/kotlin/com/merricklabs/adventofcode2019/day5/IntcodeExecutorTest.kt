@@ -1,5 +1,6 @@
 package com.merricklabs.adventofcode2019.day5
 
+import com.merricklabs.adventofcode2019.testutil.toIntCodeProgram
 import io.kotlintest.shouldBe
 import org.testng.annotations.Test
 
@@ -91,11 +92,8 @@ class IntcodeExecutorTest {
     @Test
     fun `Run test input for part 2`() {
         val program = this::class.java.getResourceAsStream("input.txt")
-                .bufferedReader()
-                .readText()
-                .split(",")
-                .map { it.toInt() }
-                .toMutableList()
+                .toIntCodeProgram()
+
         val executor = IntcodeExecutor(program, listOf(5))
         val output = executor.execute()
         println(output)

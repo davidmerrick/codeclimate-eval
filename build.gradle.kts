@@ -16,6 +16,8 @@ dependencies {
     implementation(Libs.slf4j_api)
     implementation(Libs.slf4j_jdk14)
     implementation(Libs.kotlin_logging)
+    implementation("com.github.dpaukov:combinatoricslib3:3.3.0")
+
 
     testImplementation(Libs.testng)
     testImplementation(Libs.kotlintest_runner_junit5)
