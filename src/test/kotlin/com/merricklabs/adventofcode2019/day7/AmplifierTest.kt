@@ -1,6 +1,7 @@
 package com.merricklabs.adventofcode2019.day7
 
 import com.merricklabs.adventofcode2019.day7.AmplifierExecutor.execAmplifiers
+import com.merricklabs.adventofcode2019.day7.AmplifierExecutor.execWithFeedback
 import com.merricklabs.adventofcode2019.day7.AmplifierExecutor.generatePhasePermutations
 import com.merricklabs.adventofcode2019.testutil.toIntCodeProgram
 import io.kotlintest.shouldBe
@@ -70,16 +71,8 @@ class AmplifierTest {
 
         val combos = listOf(9, 8, 7, 6, 5)
 
-        var part2Outputs = mutableListOf<Int?>()
-        var result: Int? = 0
-        while (result != null) {
-            result = execAmplifiers(program, combos, result)
-            part2Outputs.add(result)
-        }
-
-        val max = part2Outputs
-                .filterNotNull()
-                .max()
+        val outputs = execWithFeedback(program, combos)
+        val max = outputs.max()
 
         max shouldBe 139629729
     }

@@ -31,4 +31,26 @@ object AmplifierExecutor {
 
         return signal
     }
+
+    /**
+     * Exec in the part 2 feedback loop arrangement.
+     * Throw an exception if an infinite loop is detected.
+     */
+    fun execWithFeedback(program: MutableList<Int>,
+                         phaseSettings: List<Int>,
+                         initialSignal: Int = 0): List<Int> {
+
+        var outputs = mutableListOf<Int?>()
+        var result: Int? = initialSignal
+        while (result != null) {
+            val previousResult = result
+            result = execAmplifiers(program, phaseSettings, result)
+            if (previousResult == result) {
+                throw RuntimeException("Infinite loop detected. Halting.")
+            }
+            outputs.add(result)
+        }
+
+        return outputs.filterNotNull()
+    }
 }
