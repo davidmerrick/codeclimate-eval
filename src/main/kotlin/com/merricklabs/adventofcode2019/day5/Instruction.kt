@@ -90,7 +90,7 @@ data class Instruction(
     }
 
     private fun output(): ExecutionResult {
-        val output = program[params[0]].toString()
+        val output = program[params[0]]
         return ExecutionResult(output = output)
     }
 

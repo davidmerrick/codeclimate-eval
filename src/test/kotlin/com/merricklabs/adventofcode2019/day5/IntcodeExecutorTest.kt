@@ -9,7 +9,7 @@ class IntcodeExecutorTest {
     @Test
     fun `Test multiplication input with parameters`() {
         val program = mutableListOf(1002, 4, 3, 4, 33)
-        val executor = IntcodeExecutor(program, emptyList())
+        val executor = IntcodeExecutor(program)
         executor.execute()
         program[4] shouldBe 99
     }
@@ -17,7 +17,7 @@ class IntcodeExecutorTest {
     @Test
     fun `Test input`() {
         val program = mutableListOf(1101, 100, -1, 4, 0)
-        val executor = IntcodeExecutor(program, emptyList())
+        val executor = IntcodeExecutor(program)
         executor.execute()
         program[4] shouldBe 99
     }
@@ -25,8 +25,8 @@ class IntcodeExecutorTest {
     @Test(description = "This should output whatever the input is")
     fun `Test input 2`() {
         val program = mutableListOf(3, 0, 4, 0, 99)
-        val executor = IntcodeExecutor(program, listOf(5))
-        executor.execute()
+        val executor = IntcodeExecutor(program)
+        executor.execute(listOf(5))
     }
 
     @Test
@@ -37,56 +37,56 @@ class IntcodeExecutorTest {
                 .split(",")
                 .map { it.toInt() }
                 .toMutableList()
-        val executor = IntcodeExecutor(program, listOf(1))
-        executor.execute()
+        val executor = IntcodeExecutor(program)
+        executor.execute(listOf(1))
     }
 
     @Test
     fun `Test for equals to`() {
         val program = mutableListOf(3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8)
-        val executor = IntcodeExecutor(program, listOf(8))
-        val output = executor.execute()
-        output.toInt() shouldBe 1
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(8))
+        output!! shouldBe 1
     }
 
     @Test
     fun `Negative test for equals to`() {
         val program = mutableListOf(3, 9, 8, 9, 10, 9, 4, 9, 99, -1, 8)
-        val executor = IntcodeExecutor(program, listOf(7))
-        val output = executor.execute()
-        output.toInt() shouldBe 0
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(7))
+        output!! shouldBe 0
     }
 
     @Test
     fun `Test for input less than 8`() {
         val program = mutableListOf(3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8)
-        val executor = IntcodeExecutor(program, listOf(7))
-        val output = executor.execute()
-        output.toInt() shouldBe 1
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(7))
+        output!! shouldBe 1
     }
 
     @Test
     fun `Negative test for input less than 8`() {
         val program = mutableListOf(3, 9, 7, 9, 10, 9, 4, 9, 99, -1, 8)
-        val executor = IntcodeExecutor(program, listOf(9))
-        val output = executor.execute()
-        output.toInt() shouldBe 0
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(9))
+        output!! shouldBe 0
     }
 
     @Test
     fun `Immediate mode test for equal to 8`() {
         val program = mutableListOf(3, 3, 1108, -1, 8, 3, 4, 3, 99)
-        val executor = IntcodeExecutor(program, listOf(8))
-        val output = executor.execute()
-        output.toInt() shouldBe 1
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(8))
+        output!! shouldBe 1
     }
 
     @Test
     fun `Negative immediate mode test for equal to 8`() {
         val program = mutableListOf(3, 3, 1108, -1, 8, 3, 4, 3, 99)
-        val executor = IntcodeExecutor(program, listOf(7))
-        val output = executor.execute()
-        output.toInt() shouldBe 0
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(7))
+        output!! shouldBe 0
     }
 
     @Test
@@ -94,8 +94,8 @@ class IntcodeExecutorTest {
         val program = this::class.java.getResourceAsStream("input.txt")
                 .toIntCodeProgram()
 
-        val executor = IntcodeExecutor(program, listOf(5))
-        val output = executor.execute()
+        val executor = IntcodeExecutor(program)
+        val output = executor.execute(listOf(5))
         println(output)
     }
 }

@@ -3,15 +3,11 @@ package com.merricklabs.adventofcode2019.day5
 import com.merricklabs.adventofcode2019.day5.OpCode.HALT
 import com.merricklabs.adventofcode2019.day5.OpCode.INPUT
 
-class IntcodeExecutor(
-        private val program: MutableList<Int>,
-        private val input: List<Int>
-) {
+class IntcodeExecutor(private val program: MutableList<Int>) {
+    private var instructionPointer = 0
 
-    fun execute(): String {
-        var instructionPointer = 0
+    fun execute(input: List<Int> = emptyList()): Int? {
         var inputPointer = 0
-        var output = ""
 
         while (instructionPointer < program.size) {
             val header = InstructionHeader(program[instructionPointer])
@@ -19,7 +15,7 @@ class IntcodeExecutor(
                 break
             }
 
-            val currentInput = if(header.opCode == INPUT){
+            val currentInput = if (header.opCode == INPUT) {
                 input[inputPointer++]
             } else null
 
@@ -27,13 +23,13 @@ class IntcodeExecutor(
             val instruction = Instruction(header, params, currentInput, program)
 
             val result = instruction.execute()
-            output += result.output
+            result.output?.let { return it }
 
             instructionPointer = result.jumpAddr?.let {
                 it
             } ?: instructionPointer + header.numParams + 1
         }
 
-        return output
+        return null
     }
 }
