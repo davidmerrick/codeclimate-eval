@@ -4,19 +4,20 @@ import com.merricklabs.adventofcode2019.day5.IntcodeExecutor
 import org.paukov.combinatorics3.Generator
 
 private const val NUM_AMPLIFIERS = 5
+private const val INITIAL_SIGNAL = 0
 
 class AmplifierExecutor(private val program: MutableList<Int>) {
 
     private val amplifiers = initializeAmplifiers()
 
     private fun initializeAmplifiers(): List<IntcodeExecutor> {
-        return (0 until NUM_AMPLIFIERS).mapIndexed { i, _ ->
+        return (0 until NUM_AMPLIFIERS).map {
             IntcodeExecutor(program)
         }
     }
 
     fun execAmplifiers(phaseSettings: List<Int>,
-                       initialSignal: Int = 0): Int? {
+                       initialSignal: Int = INITIAL_SIGNAL): Int? {
         var signal = initialSignal
 
         for ((i, amplifier) in amplifiers.withIndex()) {
@@ -32,10 +33,8 @@ class AmplifierExecutor(private val program: MutableList<Int>) {
      * Throw an exception if an infinite loop is detected.
      */
     fun execWithFeedback(phaseSettings: List<Int>): Int? {
-        val initialSignal = 0
-        var outputs = mutableListOf<Int?>()
         var previousResult: Int? = null
-        var result: Int? = initialSignal
+        var result: Int? = 0
         while (result != null) {
             val previousResult = result
             result = execAmplifiers(phaseSettings, result)

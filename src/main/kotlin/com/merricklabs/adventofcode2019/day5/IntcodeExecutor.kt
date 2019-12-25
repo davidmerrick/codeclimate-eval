@@ -4,13 +4,16 @@ import com.merricklabs.adventofcode2019.day5.OpCode.HALT
 import com.merricklabs.adventofcode2019.day5.OpCode.INPUT
 
 class IntcodeExecutor(private val program: MutableList<Int>) {
-    private var instructionPointer = 0
+    val instructionPointer: Int
+        get() = _instructionPointer
+
+    private var _instructionPointer = 0
 
     fun execute(input: List<Int> = emptyList()): Int? {
         var inputPointer = 0
 
-        while (instructionPointer < program.size) {
-            val header = InstructionHeader(program[instructionPointer])
+        while (_instructionPointer < program.size) {
+            val header = InstructionHeader(program[_instructionPointer])
             if (header.opCode == HALT) {
                 break
             }
@@ -19,15 +22,15 @@ class IntcodeExecutor(private val program: MutableList<Int>) {
                 input[inputPointer++]
             } else null
 
-            val params = program.subList(instructionPointer + 1, instructionPointer + 1 + header.numParams)
+            val params = program.subList(_instructionPointer + 1, _instructionPointer + 1 + header.numParams)
             val instruction = Instruction(header, params, currentInput, program)
 
             val result = instruction.execute()
             result.output?.let { return it }
 
-            instructionPointer = result.jumpAddr?.let {
+            _instructionPointer = result.jumpAddr?.let {
                 it
-            } ?: instructionPointer + header.numParams + 1
+            } ?: _instructionPointer + header.numParams + 1
         }
 
         return null
