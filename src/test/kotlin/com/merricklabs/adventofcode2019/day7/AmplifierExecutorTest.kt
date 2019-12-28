@@ -12,8 +12,8 @@ class AmplifierExecutorTest {
         val program = mutableListOf(3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0)
         val phaseSettings = listOf(4, 3, 2, 1, 0)
 
-        val executor = AmplifierExecutor(program)
-        val output = executor.execAmplifiers(phaseSettings)
+        val executor = AmplifierExecutor(program, phaseSettings)
+        val output = executor.execAmplifiers()
 
         output shouldBe 43_210
     }
@@ -22,8 +22,8 @@ class AmplifierExecutorTest {
     fun `Phase setting 0,1,2,3,4`() {
         val program = mutableListOf(3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23, 101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0)
         val phaseSettings = listOf(0, 1, 2, 3, 4)
-        val executor = AmplifierExecutor(program)
-        val output = executor.execAmplifiers(phaseSettings)
+        val executor = AmplifierExecutor(program, phaseSettings)
+        val output = executor.execAmplifiers()
 
         output shouldBe 54_321
     }
@@ -34,7 +34,7 @@ class AmplifierExecutorTest {
         val combos = generatePhasePermutations(0, 4)
 
         val output = combos
-                .mapNotNull { AmplifierExecutor(program).execAmplifiers(it) }
+                .mapNotNull { AmplifierExecutor(program, it).execAmplifiers() }
                 .max()
 
         output shouldBe 54_321
@@ -47,7 +47,7 @@ class AmplifierExecutorTest {
         val combos = generatePhasePermutations(0, 4)
 
         val output = combos
-                .mapNotNull { AmplifierExecutor(program).execAmplifiers(it) }
+                .mapNotNull { AmplifierExecutor(program, it).execAmplifiers() }
                 .max()
 
         output shouldBe 65210
@@ -59,10 +59,9 @@ class AmplifierExecutorTest {
                 .toIntCodeProgram()
 
         val combinations = generatePhasePermutations(0, 4)
-        val executor = AmplifierExecutor(program)
 
         val max = combinations
-                .mapNotNull { executor.execAmplifiers(it) }
+                .mapNotNull { AmplifierExecutor(program, it).execAmplifiers() }
                 .max()
         println(max)
     }
@@ -72,9 +71,9 @@ class AmplifierExecutorTest {
         val program = mutableListOf(3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,
                 27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5)
         val combos = listOf(9, 8, 7, 6, 5)
-        val executor = AmplifierExecutor(program)
+        val executor = AmplifierExecutor(program, combos)
 
-        val output = executor.execWithFeedback(combos)
+        val output = executor.execWithFeedback()
 
         output!! shouldBe 139629729
     }
