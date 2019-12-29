@@ -1,29 +1,33 @@
 package com.merricklabs.adventofcode2019.day7
 
-import com.merricklabs.adventofcode2019.day5.ExecutionState.NOT_STARTED
+import com.merricklabs.adventofcode2019.day5.ExecutionState.HALTED
 import com.merricklabs.adventofcode2019.day5.IntcodeExecutor
-import com.merricklabs.adventofcode2019.day5.OpCode.HALT
-import com.merricklabs.adventofcode2019.day7.AmpState.HALTED
-import com.merricklabs.adventofcode2019.day7.AmpState.RUNNING
+import java.util.ArrayDeque
 
-class Amplifier(private val phaseSetting: Int,
-                program: List<Int>) : IntcodeExecutor(program) {
+class Amplifier(phase: Int, program: List<Int>) {
 
-    private var _state = RUNNING
+    private var _halted = false
+    val halted
+        get() = _halted
+
     private var _lastOutput: Int? = null
+    val lastOutput
+        get() = _lastOutput
 
-    fun executeWithSignal(signal: Int?): Int? {
-        val input = if (this.state == NOT_STARTED) {
-            phaseSetting
-        } else {
-            signal
+    private val intcodeExecutor = IntcodeExecutor(program, ArrayDeque(listOf(phase)))
+
+    fun step(signal: Int?): Int? {
+        signal?.let {
+            this.intcodeExecutor.input.add(signal)
+            val result = this.intcodeExecutor.execute()
+            if (this.intcodeExecutor.state == HALTED) {
+                _halted = true
+            } else {
+                _lastOutput = result
+            }
+            return result
         }
-        val result = this.execute(input)
-        if (this.lastInstruction?.opCode == HALT) {
-            _state = HALTED
-        } else {
-            _lastOutput = result
-        }
-        return result
+
+        return null
     }
 }

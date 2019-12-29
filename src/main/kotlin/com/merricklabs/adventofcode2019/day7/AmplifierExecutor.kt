@@ -1,12 +1,11 @@
 package com.merricklabs.adventofcode2019.day7
 
-import com.merricklabs.adventofcode2019.day7.AmpState.RUNNING
 import org.paukov.combinatorics3.Generator
 
 private const val NUM_AMPLIFIERS = 5
 private const val INITIAL_SIGNAL = 0
 
-class AmplifierExecutor(private val program: MutableList<Int>,
+class AmplifierExecutor(private val program: List<Int>,
                         private val phaseSettings: List<Int>) {
 
     private val amplifiers = initializeAmplifiers()
@@ -20,9 +19,7 @@ class AmplifierExecutor(private val program: MutableList<Int>,
     fun execAmplifiers(signal: Int? = INITIAL_SIGNAL): Int? {
         var result = signal
         for (amplifier in amplifiers) {
-            if (amplifier.state == RUNNING) {
-                result = (amplifier.executeWithSignal(result))
-            }
+            result = amplifier.step(result)
         }
 
         return result
@@ -30,16 +27,14 @@ class AmplifierExecutor(private val program: MutableList<Int>,
 
     /**
      * Exec in the part 2 feedback loop arrangement.
-     * Throw an exception if an infinite loop is detected.
      */
-    fun execWithFeedback(): Int? {
-        var result: Int? = 0
-        while (amplifiers.any { it.state == RUNNING }) {
+    fun execWithFeedback(): Int {
+        var result: Int? = INITIAL_SIGNAL
+        while (result != null) {
             result = execAmplifiers(result)
-
         }
 
-        return amplifiers[NUM_AMPLIFIERS - 1].lastOutput
+        return amplifiers[NUM_AMPLIFIERS - 1].lastOutput!!
     }
 
     companion object {
