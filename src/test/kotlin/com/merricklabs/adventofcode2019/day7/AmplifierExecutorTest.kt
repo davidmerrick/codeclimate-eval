@@ -67,9 +67,23 @@ class AmplifierExecutorTest {
     }
 
     @Test
+    fun `Debugging part 2`() {
+        val program = listOf(3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26,
+                27, 4, 27, 1001, 28, -1, 28, 1005, 28, 6, 99, 0, 0, 5)
+        val amplifier = Amplifier(9, program)
+
+        var result: Int? = 0
+        result = amplifier.executeWithSignal(result)
+        result shouldBe 5
+
+        result = amplifier.executeWithSignal(result)
+        result shouldBe 15
+    }
+
+    @Test
     fun `Part 2 test 1`() {
-        val program = mutableListOf(3,26,1001,26,-4,26,3,27,1002,27,2,27,1,27,26,
-                27,4,27,1001,28,-1,28,1005,28,6,99,0,0,5)
+        val program = mutableListOf(3, 26, 1001, 26, -4, 26, 3, 27, 1002, 27, 2, 27, 1, 27, 26,
+                27, 4, 27, 1001, 28, -1, 28, 1005, 28, 6, 99, 0, 0, 5)
         val combos = listOf(9, 8, 7, 6, 5)
         val executor = AmplifierExecutor(program, combos)
 

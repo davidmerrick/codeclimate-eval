@@ -30,9 +30,9 @@ data class Instruction(
     }
 
     private fun jumpIfTrue(): ExecutionResult {
-        val firstParam = getParam(0, program)
+        val firstParam = getParam(0)
         return if (firstParam != 0) {
-            val secondParam = getParam(1, program)
+            val secondParam = getParam(1)
             ExecutionResult(jumpAddr = secondParam)
         } else {
             ExecutionResult()
@@ -40,9 +40,9 @@ data class Instruction(
     }
 
     private fun jumpIfFalse(): ExecutionResult {
-        val firstParam = getParam(0, program)
+        val firstParam = getParam(0)
         return if (firstParam == 0) {
-            val secondParam = getParam(1, program)
+            val secondParam = getParam(1)
             ExecutionResult(jumpAddr = secondParam)
         } else {
             ExecutionResult()
@@ -50,8 +50,8 @@ data class Instruction(
     }
 
     private fun lessThan(): ExecutionResult {
-        val firstParam = getParam(0, program)
-        val secondParam = getParam(1, program)
+        val firstParam = getParam(0)
+        val secondParam = getParam(1)
         val thirdParam = params[2]
         program[thirdParam] = if (firstParam < secondParam) {
             1
@@ -62,8 +62,8 @@ data class Instruction(
     }
 
     private fun equals(): ExecutionResult {
-        val firstParam = getParam(0, program)
-        val secondParam = getParam(1, program)
+        val firstParam = getParam(0)
+        val secondParam = getParam(1)
         val thirdParam = params[2]
         program[thirdParam] = if (firstParam == secondParam) {
             1
@@ -74,8 +74,8 @@ data class Instruction(
     }
 
     private fun multiply(): ExecutionResult {
-        val firstParam = getParam(0, program)
-        val secondParam = getParam(1, program)
+        val firstParam = getParam(0)
+        val secondParam = getParam(1)
 
         // Parameters that an instruction writes to
         // will never be in immediate mode.
@@ -95,8 +95,8 @@ data class Instruction(
     }
 
     private fun add(): ExecutionResult {
-        val firstParam = getParam(0, program)
-        val secondParam = getParam(1, program)
+        val firstParam = getParam(0)
+        val secondParam = getParam(1)
         val thirdParam = params[2]
 
         // Parameters that an instruction writes to
@@ -105,7 +105,7 @@ data class Instruction(
         return ExecutionResult()
     }
 
-    private fun getParam(index: Int, program: MutableList<Int>) = if (header.paramModes[index] == 0) {
+    private fun getParam(index: Int) = if (header.paramModes[index] == 0) {
         program[params[index]]
     } else {
         params[index]

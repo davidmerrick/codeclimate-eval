@@ -21,7 +21,7 @@ class AmplifierExecutor(private val program: MutableList<Int>,
         var result = signal
         for (amplifier in amplifiers) {
             if (amplifier.state == RUNNING) {
-                result = (amplifier.execute(result))
+                result = (amplifier.executeWithSignal(result))
             }
         }
 
