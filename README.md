@@ -1,6 +1,6 @@
-Advent of Code 2019
+My work for [Advent of Code 2019](https://adventofcode.com/2019)
 
-https://adventofcode.com/2019
+Written in Kotlin with TestNG for tests.
 
 # Helpful resources
 
