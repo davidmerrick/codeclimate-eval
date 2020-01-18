@@ -38,8 +38,9 @@ tasks {
     jacocoTestReport {
         mustRunAfter(test)
         reports {
-            xml.isEnabled = false
+            xml.isEnabled = true
             csv.isEnabled = false
+            xml.destination = file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml")
             html.destination = file("${buildDir}/jacocoHtml")
         }
     }
