@@ -2,7 +2,8 @@
 
 My work for [Advent of Code 2019](https://adventofcode.com/2019)
 
-Written in Kotlin with TestNG for tests.
+- Written in Kotlin with TestNG for tests.
+- Uses [Codacy](https://www.codacy.com/) for code coverage reports.
 
 # Helpful resources
 
