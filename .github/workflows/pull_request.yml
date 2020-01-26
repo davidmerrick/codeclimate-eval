@@ -7,9 +7,11 @@ jobs:
     name: Build and test
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      GIT_BRANCH: ${GITHUB_REF:11}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
+      - name: Set Git branch for Code Climate
+        run: echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
+      - uses: actions/checkout@v1
       - name: Setup Code Climate tool
         run: |
           apt-get update && apt-get install -y curl git
