@@ -8,39 +8,6 @@ import org.testng.annotations.Test
 class AmplifierExecutorTest {
 
     @Test
-    fun `Phase setting 4,3,2,1,0`() {
-        val program = mutableListOf(3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0)
-        val phaseSettings = listOf(4, 3, 2, 1, 0)
-
-        val executor = AmplifierExecutor(program, phaseSettings)
-        val output = executor.execAmplifiers()
-
-        output shouldBe 43_210
-    }
-
-    @Test
-    fun `Phase setting 0,1,2,3,4`() {
-        val program = mutableListOf(3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23, 101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0)
-        val phaseSettings = listOf(0, 1, 2, 3, 4)
-        val executor = AmplifierExecutor(program, phaseSettings)
-        val output = executor.execAmplifiers()
-
-        output shouldBe 54_321
-    }
-
-    @Test
-    fun `Find max output of program`() {
-        val program = mutableListOf(3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23, 101, 5, 23, 23, 1, 24, 23, 23, 4, 23, 99, 0, 0)
-        val combos = generatePhasePermutations(0, 4)
-
-        val output = combos
-                .mapNotNull { AmplifierExecutor(program, it).execAmplifiers() }
-                .max()
-
-        output shouldBe 54_321
-    }
-
-    @Test
     fun `Max output test 3`() {
         val program = mutableListOf(3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33,
                 1002, 33, 7, 33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0)
