@@ -13,7 +13,7 @@ jobs:
       GIT_BRANCH: ${GITHUB_REF:11}
     steps:
       - name: Set Git branch for Code Climate
-        run: echo $GIT_BRANCH
+        run: echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
       - name: Setup Code Climate tool
         run: |
           echo "Git branch"
