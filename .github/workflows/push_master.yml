@@ -11,12 +11,10 @@ jobs:
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     steps:
-      - uses: actions/checkout@v1
+      - name: Set Git branch for Code Climate
+        run: echo ::set-env name=RELEASE_VERSION::${GITHUB_REF:11}
       - name: Setup Code Climate tool
         run: |
-          export GIT_BRANCH=${GITHUB_REF:10}
-          echo "Git branch:"
-          echo $GIT_BRANCH
           apt-get update && apt-get install -y curl git
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter 
