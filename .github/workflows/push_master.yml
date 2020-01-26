@@ -10,7 +10,7 @@ jobs:
     name: Build and test
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      GIT_BRANCH: ${GITHUB_REF::11}
+      GIT_BRANCH: ${GITHUB_REF:11}
     steps:
       - name: Set Git branch for Code Climate
         run: echo $GIT_BRANCH
