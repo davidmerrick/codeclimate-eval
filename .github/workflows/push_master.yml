@@ -10,7 +10,6 @@ jobs:
     name: Build and test
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      GIT_BRANCH: $GITHUB_REF
     steps:
       - uses: actions/checkout@v1
       - name: Setup Code Climate tool
@@ -18,6 +17,8 @@ jobs:
           apt-get update && apt-get install -y curl git
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter 
+      - name: Set git branch
+        run: export GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
       - name: Before tests
         run: ./cc-test-reporter before-build
       - name: Test
