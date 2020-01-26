@@ -10,6 +10,7 @@ jobs:
     name: Build and test
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      GIT_BRANCH: $GITHUB_REF
     steps:
       - uses: actions/checkout@v1
       - name: Setup Code Climate tool
