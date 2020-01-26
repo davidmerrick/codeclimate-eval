@@ -17,10 +17,10 @@ jobs:
           apt-get update && apt-get install -y curl git
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
           chmod +x ./cc-test-reporter 
-      - name: Set git branch
-        run: export GIT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
       - name: Before tests
         run: ./cc-test-reporter before-build
+        env:
+          GIT_BRANCH: $(git rev-parse --abbrev-ref HEAD)
       - name: Test
         run: ./gradlew test
       - name: Publish test coverage
@@ -28,3 +28,5 @@ jobs:
           ./gradlew testCoverage
           JACOCO_SOURCE_PATH=src/main/kotlin ./cc-test-reporter format-coverage -t jacoco ./build/reports/jacoco/test/jacocoTestReport.xml
           ./cc-test-reporter upload-coverage
+        env:
+          GIT_BRANCH: $(git rev-parse --abbrev-ref HEAD)
