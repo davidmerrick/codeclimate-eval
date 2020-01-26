@@ -10,9 +10,10 @@ jobs:
     name: Build and test
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      GIT_BRANCH: ${GITHUB_REF::11}
     steps:
       - name: Set Git branch for Code Climate
-        run: echo ::set-env name=GIT_BRANCH::$GITHUB_REF
+        run: echo $GIT_BRANCH
       - name: Setup Code Climate tool
         run: |
           echo "Git branch"
