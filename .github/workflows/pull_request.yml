@@ -15,7 +15,7 @@ jobs:
       # Reference: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#github-context
       - name: Set Git branch for Code Climate
         run: |
-          if [[ "${{ github.event_name }}" = "pull_request" ]]
+          if [ "${{ github.event_name }}" = "pull_request" ]
           then 
             echo ::set-env name=GIT_BRANCH::$(echo ${{ github.head_ref }} | cut -c12-)
           else
