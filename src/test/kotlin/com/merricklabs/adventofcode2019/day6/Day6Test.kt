@@ -8,6 +8,11 @@ import org.testng.annotations.Test
 class Day6Test {
 
     @Test
+    fun `A failing test`(){
+        throw RuntimeException()
+    }
+
+    @Test
     fun `Test example problem`() {
         val orbitList = """
             COM)B
