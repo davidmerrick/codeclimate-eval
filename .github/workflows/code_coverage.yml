@@ -33,6 +33,11 @@ jobs:
         run: ./cc-test-reporter before-build
       - name: Test
         run: ./gradlew test
+      - name: Archive test artifacts
+          uses: actions/upload-artifact@v1
+          with:
+            name: testng
+            path: build/reports/tests/test
       - name: Publish test coverage
         run: | 
           ./gradlew testCoverage

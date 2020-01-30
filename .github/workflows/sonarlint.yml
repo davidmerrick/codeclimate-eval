@@ -9,4 +9,3 @@ jobs:
     name: Build and test
     steps:
       - uses: actions/checkout@v1
-
