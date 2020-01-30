@@ -21,8 +21,6 @@ jobs:
           else
             echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
           fi
-      - name: Check git branch
-        run:  echo "GIT_BRANCH is $GIT_BRANCH"
       - uses: actions/checkout@v1
       - name: Setup Code Climate tool
         run: |
