@@ -1,0 +1,12 @@
+name: SonarLint
+
+on: pull_request
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    container: openjdk:11.0.1-jdk-slim-stretch
+    name: Build and test
+    steps:
+      - uses: actions/checkout@v1
+
