@@ -9,6 +9,7 @@ class AmplifierExecutor(private val program: List<Int>,
                         private val phaseSettings: List<Int>) {
 
     private val amplifiers = initializeAmplifiers()
+    val foo = ""
 
     private fun initializeAmplifiers(): List<Amplifier> {
         return (0 until NUM_AMPLIFIERS).map {
