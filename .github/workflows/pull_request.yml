@@ -17,6 +17,7 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]
           then 
+            echo "github.head_ref = ${{ github.head_ref }}"
             echo ::set-env name=GIT_BRANCH::$(echo ${{ github.head_ref }} | cut -c12-)
           else
             echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
