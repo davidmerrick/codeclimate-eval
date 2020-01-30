@@ -1,4 +1,8 @@
-on: [pull_request]
+on: 
+  pull_request:
+  push:
+    branches:
+      - master
 
 jobs:
   build_and_test:
@@ -7,10 +11,17 @@ jobs:
     name: Build and test
     env:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      GIT_BRANCH: ${GITHUB_REF:11}
     steps:
+      # Reference: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#github-context
       - name: Set Git branch for Code Climate
-        run: echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
+        run: |
+          if [[ "${{ github.event_name }}" = "pull_request" ]]
+          then 
+            echo ::set-env name=GIT_BRANCH::$(echo ${{ github.head_ref }} | cut -c12-)
+          else
+            echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
+          fi
+          echo "Set GIT_BRANCH to $GIT_BRANCH"
       - uses: actions/checkout@v1
       - name: Setup Code Climate tool
         run: |
