@@ -23,7 +23,7 @@ jobs:
         mkdir foo
         echo "bar" > foo/bar.txt
         #docker run --volume $PWD/foo:/foo ubuntu "echo bar > /foo/bar.txt"
-        docker run --volume $PWD/foo:/foo ubuntu ls /
+        docker run --volume $PWD/foo:/foo ubuntu cat /foo/bar
     - name: Archive workspace
       if: always()
       uses: actions/upload-artifact@v1
