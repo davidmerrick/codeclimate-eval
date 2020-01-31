@@ -11,7 +11,7 @@ jobs:
     - name: Configure container
       run: | 
         apt-get update
-        apt-get install -y make git apt-transport-https ca-certificates curl gnupg2 software-properties-common 
+        apt-get install -y tree make git apt-transport-https ca-certificates curl gnupg2 software-properties-common 
         add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
         curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
         apt-get update
@@ -22,7 +22,7 @@ jobs:
       run: |
         mkdir foo
         echo "bar" > foo/bar.txt
-        docker run --volume $PWD/foo:/foo ubuntu echo "foo contains" && ls /
+        docker run --volume $PWD/foo:/app/foo ubuntu echo "foo contains" && tree /app
     - name: Archive workspace
       if: always()
       uses: actions/upload-artifact@v1
