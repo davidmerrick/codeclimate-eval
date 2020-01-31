@@ -21,7 +21,9 @@ jobs:
     - name: Mount a volume and put stuff in it
       run: |
         mkdir foo
-        docker run --volume $PWD/foo:/foo ubuntu "echo bar > /foo/bar.txt"
+        echo "bar" > foo/bar.txt
+        #docker run --volume $PWD/foo:/foo ubuntu "echo bar > /foo/bar.txt"
+        docker run --volume $PWD/foo:/foo ubuntu "ls /foo"
     - name: Archive workspace
       if: always()
       uses: actions/upload-artifact@v1
