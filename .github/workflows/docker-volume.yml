@@ -1,9 +1,6 @@
 name: Volume mount
 
-on: 
-  pull_request:
-    branches:
-      - volume-mount-test
+on: [pull_request]
       
 jobs:
   build_and_test:
