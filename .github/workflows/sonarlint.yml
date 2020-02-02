@@ -8,7 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - name: Run analysis
-        run: codeclimate analyze > analysis.txt
+        run: analyze > analysis.txt
       - name: Persist analysis file
         uses: actions/upload-artifact@v1
         with:
