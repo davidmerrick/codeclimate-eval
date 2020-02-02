@@ -1,0 +1,20 @@
+on: [pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    container: openjdk:11.0.1-jdk-slim-stretch
+    name: Build and test
+    steps:
+      - name: Setup Code Climate analyzer
+        run: |
+          curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz
+          cd codeclimate-* && sudo make install
+      - uses: actions/checkout@v1
+      - name: Run analysis
+        run: codeclimate analyze > analysis.txt
+      - name: Persist analysis file
+        uses: actions/upload-artifact@v1
+        with:
+          name: analysis
+          path: ./analysis.txt
