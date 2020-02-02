@@ -13,11 +13,12 @@ jobs:
       CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
     steps:
       # Reference: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#github-context
-      - name: Set Git branch for Code Climate
+      - name: Set Git branch and SHA for Code Climate
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]
           then 
             echo ::set-env name=GIT_BRANCH::${{ github.head_ref }}
+            echo ::set-env name=GIT_COMMIT_SHA::${{ github.event.pull_request.head.sha }}
           else
             echo ::set-env name=GIT_BRANCH::$(echo $GITHUB_REF | cut -c12-)
           fi
