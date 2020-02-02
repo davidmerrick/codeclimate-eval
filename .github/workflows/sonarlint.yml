@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Setup Code Climate analyzer
         run: |
-          apt-get update && apt-get install -y curl build-essential
+          apt-get update && apt-get install -y curl build-essential sudo
           curl -L https://github.com/codeclimate/codeclimate/archive/master.tar.gz | tar xvz
           cd codeclimate-* && sudo make install
       - uses: actions/checkout@v1
