@@ -14,9 +14,8 @@ jobs:
     steps:
       - name: Dump GitHub context vars
         run: | 
-          echo "github.sha: ${{ github.sha }}"
-          echo "github.ref: ${{ github.ref }}"
-          echo "github.head_ref: ${{ github.head_ref }}"
+          echo "github: "
+          echo ${{ toJson(github) }}
       # Reference: https://help.github.com/en/actions/automating-your-workflow-with-github-actions/contexts-and-expression-syntax-for-github-actions#github-context
       - name: Set Git branch for Code Climate
         run: |
